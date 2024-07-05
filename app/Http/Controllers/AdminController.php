@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Todo;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -12,7 +13,9 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/MainPage');
+        return Inertia::render('Admin/MainPage', [
+            'todos' => Todo::latest()->paginate(2),
+        ]);
     }
 
     /**
@@ -28,7 +31,19 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate(
+            [
+                'name' => 'required|min:3',
+                'is_completed' => 'boolean',
+            ],
+            [
+                'name.required' => 'Data todo tidak boleh kosong',
+                'name.min' => 'Data todo minimal 3 karakter',
+            ]
+        );
+
+        Todo::create($data);
+        return back()->with('message', 'Todo created successfully');
     }
 
     /**

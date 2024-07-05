@@ -3,6 +3,8 @@ import React from "react";
 
 const AdminLayout = ({ children }) => {
     const { component } = usePage();
+    const { auth } = usePage().props;
+
     return (
         <>
             <header className="bg-black text-white py-8">
@@ -22,8 +24,18 @@ const AdminLayout = ({ children }) => {
                                 >
                                     Todo
                                 </Link>
+                                <Link
+                                    href="/users"
+                                    className={`${
+                                        component == "Users"
+                                            ? "text-indigo-500"
+                                            : ""
+                                    }`}
+                                >
+                                    Users
+                                </Link>
                             </div>
-                            <div>user</div>
+                            <div>{auth.user.name}</div>
                         </nav>
                     </div>
                 </div>

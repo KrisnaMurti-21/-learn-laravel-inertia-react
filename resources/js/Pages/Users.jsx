@@ -1,7 +1,12 @@
+import AdminLayout from "@/Layouts/AdminLayout";
 import React from "react";
 
 const Users = ({ status }) => {
-    return <div>Users : {status} </div>;
+    return (
+        <AdminLayout>
+            <div>Users : {status} </div>
+        </AdminLayout>
+    );
 };
 
 export default Users;
