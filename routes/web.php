@@ -30,6 +30,9 @@ Route::get('/users', [UserController::class, 'index'])->middleware('auth')->name
 Route::middleware('auth')->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::post('/admin', [AdminController::class, 'store'])->name('admin.store');
+    Route::get('/admin/edit/{todo}', [AdminController::class, 'edit'])->name('admin.edit');
+    Route::patch('/admin/edit/{todo}', [AdminController::class, 'update'])->name('admin.update');
+    Route::patch('/admin/edit_completed/{todo}', [AdminController::class, 'updateCompleted'])->name('admin.updateCompleted');
 });
 
 require __DIR__ . '/auth.php';

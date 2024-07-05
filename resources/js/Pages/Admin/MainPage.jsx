@@ -2,10 +2,11 @@ import ListTodo from "@/Components/ListTodo";
 import Pagination from "@/Components/Pagination";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { router, useForm, usePage } from "@inertiajs/react";
-import React from "react";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 import { BsPencilSquare } from "react-icons/bs";
-import { FaRegTrashAlt } from "react-icons/fa";
-import { FaRegCheckCircle } from "react-icons/fa";
+import { FaRegCheckCircle, FaRegTrashAlt } from "react-icons/fa";
+import { FaRegCircleXmark } from "react-icons/fa6";
 
 function MainPage({ todos }) {
     const { flash, errors } = usePage().props;
@@ -18,17 +19,34 @@ function MainPage({ todos }) {
             onSuccess: () => reset(),
         });
     };
+
+    const handleComplete = (id, name, isComplete) => {
+        let title = document.getElementById(id);
+        title.innerText = "Updating...";
+        router.patch(
+            `/admin/edit_completed/${id}`,
+            {
+                is_completed: !isComplete,
+            },
+            {
+                onSuccess: () => {
+                    title.innerText = name;
+                },
+            }
+        );
+    };
+    useEffect(() => {
+        if (flash.message) {
+            toast.success(flash.message);
+        }
+    }, [flash]);
+
     return (
         <AdminLayout>
             <div className="max-w-4xl mx-auto">
                 <h2 className="font-semibold text-4xl my-8 text-center">
                     Todo App
                 </h2>
-                {flash.message && (
-                    <div className="py-2 px-4 rounded-md bg-green-500 text-center mb-6">
-                        {flash.message}
-                    </div>
-                )}
                 <form onSubmit={storeTodo}>
                     <div className="mb-6">
                         <div className="flex gap-4 items-center">
@@ -55,10 +73,42 @@ function MainPage({ todos }) {
                     {todos.data.map((todo, i) => (
                         <ListTodo
                             key={i}
-                            bgColor="bg-red-400"
+                            bgColor={`${
+                                todo.is_completed
+                                    ? "bg-green-300"
+                                    : "bg-red-400"
+                            }`}
+                            iconStatus={
+                                todo.is_completed ? (
+                                    <FaRegCircleXmark
+                                        className="cursor-pointer text-red-600"
+                                        size={18}
+                                        onClick={() =>
+                                            handleComplete(
+                                                todo.id,
+                                                todo.name,
+                                                todo.is_completed
+                                            )
+                                        }
+                                    />
+                                ) : (
+                                    <FaRegCheckCircle
+                                        className="cursor-pointer"
+                                        size={18}
+                                        onClick={() =>
+                                            handleComplete(
+                                                todo.id,
+                                                todo.name,
+                                                todo.is_completed
+                                            )
+                                        }
+                                    />
+                                )
+                            }
                             iconLeft={<BsPencilSquare size={18} />}
                             iconRight={<FaRegTrashAlt size={18} />}
                             text={todo.name}
+                            id={todo.id}
                         />
                     ))}
                 </div>

@@ -57,17 +57,38 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    /**Pengetahuan baru dalam memanipulasi model seperti dibawah ini */
+    /**Lebih cepat dalam mengambil data spesifik */
+    public function edit(Todo $todo)
     {
-        //
+        return Inertia::render('Admin/EditList', [
+            'todo' => $todo,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Todo $todo)
     {
-        //
+        $data = $request->validate(
+            [
+                'name' => 'required|min:3',
+            ]
+        );
+        $todo->update($data);
+        return redirect(route('admin.index'))->with('message', 'Todo updated successfully');
+    }
+
+    public function updateCompleted(Request $request, Todo $todo)
+    {
+        $data = $request->validate(
+            [
+                'is_completed' => 'boolean',
+            ]
+        );
+        $todo->update($data);
+        return redirect(route('admin.index'))->with('message', 'Todo was change');
     }
 
     /**

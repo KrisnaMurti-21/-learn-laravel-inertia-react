@@ -1,5 +1,6 @@
 import { Link, usePage } from "@inertiajs/react";
 import React from "react";
+import { Toaster } from "react-hot-toast";
 
 const AdminLayout = ({ children }) => {
     const { component } = usePage();
@@ -7,6 +8,9 @@ const AdminLayout = ({ children }) => {
 
     return (
         <>
+            <div>
+                <Toaster />
+            </div>
             <header className="bg-black text-white py-8">
                 <div className="container max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl mx-auto">
                     <div className="flex justify-between items-center">
