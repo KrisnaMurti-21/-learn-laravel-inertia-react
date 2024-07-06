@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/edit/{todo}', [AdminController::class, 'edit'])->name('admin.edit');
     Route::patch('/admin/edit/{todo}', [AdminController::class, 'update'])->name('admin.update');
     Route::patch('/admin/edit_completed/{todo}', [AdminController::class, 'updateCompleted'])->name('admin.updateCompleted');
+    Route::delete('/admin/{todo}/delete', [AdminController::class, 'destroy'])->name('admin.destroy');
 });
 
 require __DIR__ . '/auth.php';

@@ -94,8 +94,9 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Todo $todo)
     {
-        //
+        $todo->delete();
+        return back()->with('message', 'Todo deleted successfully');
     }
 }
