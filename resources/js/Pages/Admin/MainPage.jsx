@@ -52,7 +52,6 @@ function MainPage({ todos }) {
             id: id,
             name: name,
         });
-        // router.delete(`/admin/${id}`);
     };
 
     return (
@@ -89,50 +88,16 @@ function MainPage({ todos }) {
                         {todos.data.map((todo, i) => (
                             <ListTodo
                                 key={i}
-                                bgColor={`${
-                                    todo.is_completed
-                                        ? "bg-green-300"
-                                        : "bg-red-400"
-                                }`}
-                                iconStatus={
-                                    todo.is_completed ? (
-                                        <FaRegCircleXmark
-                                            className="cursor-pointer text-red-600"
-                                            size={18}
-                                            onClick={() =>
-                                                handleComplete(
-                                                    todo.id,
-                                                    todo.name,
-                                                    todo.is_completed
-                                                )
-                                            }
-                                        />
-                                    ) : (
-                                        <FaRegCheckCircle
-                                            className="cursor-pointer"
-                                            size={18}
-                                            onClick={() =>
-                                                handleComplete(
-                                                    todo.id,
-                                                    todo.name,
-                                                    todo.is_completed
-                                                )
-                                            }
-                                        />
+                                is_complete={todo.is_completed}
+                                onClick={() =>
+                                    handleComplete(
+                                        todo.id,
+                                        todo.name,
+                                        todo.is_completed
                                     )
                                 }
-                                iconLeft={<BsPencilSquare size={18} />}
-                                iconRight={
-                                    <FaRegTrashAlt
-                                        size={18}
-                                        className="cursor-pointer"
-                                        onClick={() =>
-                                            handleConfirmation(
-                                                todo.id,
-                                                todo.name
-                                            )
-                                        }
-                                    />
+                                onClickDelete={() =>
+                                    handleConfirmation(todo.id, todo.name)
                                 }
                                 text={todo.name}
                                 id={todo.id}
