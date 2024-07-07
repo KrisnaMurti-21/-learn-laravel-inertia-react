@@ -29,7 +29,7 @@ const AdminLayout = ({ children }) => {
                                     Todo
                                 </Link>
                                 <Link
-                                    href="/users"
+                                    href={route("users.index")}
                                     className={`${
                                         component == "Users"
                                             ? "text-indigo-500"
@@ -37,6 +37,16 @@ const AdminLayout = ({ children }) => {
                                     }`}
                                 >
                                     Users
+                                </Link>
+                                <Link
+                                    href={route("product.index")}
+                                    className={`${
+                                        component == "Admin/Product/index"
+                                            ? "text-indigo-500"
+                                            : ""
+                                    }`}
+                                >
+                                    Products
                                 </Link>
                             </div>
                             <div>{auth.user.name}</div>

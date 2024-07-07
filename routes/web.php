@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
@@ -34,6 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/admin/edit/{todo}', [AdminController::class, 'update'])->name('admin.update');
     Route::patch('/admin/edit_completed/{todo}', [AdminController::class, 'updateCompleted'])->name('admin.updateCompleted');
     Route::delete('/admin/{todo}/delete', [AdminController::class, 'destroy'])->name('admin.destroy');
+    Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+    Route::get('/product/search', [ProductController::class, 'search'])->name('product.search');
 });
 
 require __DIR__ . '/auth.php';
