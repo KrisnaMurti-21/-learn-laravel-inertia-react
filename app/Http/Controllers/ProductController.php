@@ -23,9 +23,7 @@ class ProductController extends Controller
                 'id' => $product->id,
                 'name' => $product->name,
                 'price' => $product->price,
-                // Asumsikan kolom gambar di database bernama 'image'
                 'image' => $product->image ? asset('images/' . $product->image) : null,
-                // Tambahkan field lain yang diperlukan
             ];
         });
 
