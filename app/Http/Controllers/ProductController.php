@@ -18,7 +18,17 @@ class ProductController extends Controller
         //     $data = Product::where('name', 'like', '%' . $search . '%')->get();
         // } else {
         // }
-        $data = Product::all();
+        $data = Product::all()->map(function ($product) {
+            return [
+                'id' => $product->id,
+                'name' => $product->name,
+                'price' => $product->price,
+                // Asumsikan kolom gambar di database bernama 'image'
+                'image' => $product->image ? asset('images/' . $product->image) : null,
+                // Tambahkan field lain yang diperlukan
+            ];
+        });
+
         return Inertia::render('Admin/Product/index', [
             'dataBarang' => $data
         ]);
@@ -29,7 +39,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Product/Edit');
     }
 
     /**
@@ -37,7 +47,26 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $request->validate([
+            'productName' => 'required',
+            'price' => 'required',
+            'categoryId' => 'required',
+            'fileSend' => 'required|image|mimes:png,jpg,jpeg,svg|max:2048',
+        ]);
+
+        $imageName = time() . '.' . $request->fileSend->extension();
+
+        $data = [
+            'name' => $request->productName,
+            'price' => $request->price,
+            'category_id' => $request->categoryId,
+            'image' => $imageName
+        ];
+        // dd($data);
+        $request->fileSend->move(public_path('images'), $imageName);
+        Product::create($data);
+        return redirect(route('product.index'));
     }
 
     /**

@@ -1,12 +1,12 @@
 import React from "react";
 
-const Card = ({ name, price, category, id }) => {
+const Card = ({ name, price, category, id, image }) => {
     return (
         <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <a href="#">
                 <img
                     className="p-8 rounded-t-lg"
-                    src="\image\apple-watch.png"
+                    src={image ? image : "/image/image-1@2x.jpg"}
                     alt="product image"
                 />
             </a>

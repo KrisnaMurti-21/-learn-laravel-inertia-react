@@ -37,6 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/admin/{todo}/delete', [AdminController::class, 'destroy'])->name('admin.destroy');
     Route::get('/product', [ProductController::class, 'index'])->name('product.index');
     Route::get('/product/search', [ProductController::class, 'search'])->name('product.search');
+    Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
+    Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
 });
 
 require __DIR__ . '/auth.php';
