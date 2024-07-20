@@ -23,7 +23,7 @@ class ProductController extends Controller
                 'id' => $product->id,
                 'name' => $product->name,
                 'price' => $product->price,
-                'image' => $product->image ? asset('images/' . $product->image) : null,
+                'image' => $product->image ? asset('/storage/images/' . $product->image) : null,
             ];
         });
 
@@ -62,7 +62,7 @@ class ProductController extends Controller
             'image' => $imageName
         ];
         // dd($data);
-        $request->fileSend->move(public_path('images'), $imageName);
+        $request->fileSend->storeAs('images', $imageName, 'public');
         Product::create($data);
         return redirect(route('product.index'));
     }
